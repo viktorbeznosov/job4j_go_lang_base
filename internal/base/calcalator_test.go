@@ -1,9 +1,10 @@
 package base_test
 
 import (
-	"github.com/stretchr/testify/assert"
-	"job4j.ru/go-lang-base/internal/base"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
+	"github.com/viktorbeznosov/job4j_go_lang_base/internal/base"
 )
 
 func Test_Add(t *testing.T) {
