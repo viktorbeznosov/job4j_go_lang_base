@@ -1,4 +1,4 @@
-module job4j.ru/go-lang-base
+module github.com/viktorbeznosov/job4j_go_lang_base
 
 go 1.24.2
 
