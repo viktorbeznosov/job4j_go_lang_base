@@ -7,11 +7,21 @@ import (
 )
 
 func main() {
-	fmt.Println("Hello World")
-	fmt.Println(base.Add(1, 3))
-	fmt.Println(base.Max(3, 2))
-	fmt.Println(base.Count(5))
+	lruCache := base.NewLruCache(5)
 
-	sl := []int{1, 1, 2, 3, 1}
-	fmt.Printf("%t\n", base.Mono(sl))
+	lruCache.Put("1", "Value1")
+	lruCache.Put("2", "Value2")
+	lruCache.Put("3", "Value3")
+	lruCache.Put("2", "QWERTY")
+	lruCache.Put("4", "Value4")
+	lruCache.Put("5", "Value5")
+	fmt.Println(lruCache.Length())
+
+	lruCache.Get("3")
+
+	current := lruCache.Head
+	for current != nil {
+		fmt.Println(current)
+		current = current.Prev
+	}
 }
