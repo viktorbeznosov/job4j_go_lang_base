@@ -8,9 +8,7 @@ import (
 )
 
 func Test_Validate_Request_Empty(t *testing.T) {
-	var empteRequest *base.ValidateRequest
-
-	empteRequest = &base.ValidateRequest{}
+	empteRequest := &base.ValidateRequest{}
 
 	result := base.Validate(empteRequest)
 
@@ -21,9 +19,7 @@ func Test_Validate_Request_Empty(t *testing.T) {
 }
 
 func Test_Validate_Request_Is_Ok(t *testing.T) {
-	var request *base.ValidateRequest
-
-	request = &base.ValidateRequest{
+	request := &base.ValidateRequest{
 		UserID:      "1",
 		Description: "test",
 		Title:       "Test User",
