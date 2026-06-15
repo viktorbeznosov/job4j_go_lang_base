@@ -14,7 +14,13 @@ func (u AddUsecase) Done(in Input, out Output, tracker *Tracker) {
 	out.Out("enter name:")
 	name := in.Get()
 	id := uuid.New().String()
-	tracker.AddItem(Item{Name: name, ID: id})
+	err := tracker.AddItem(Item{Name: name, ID: id})
+	result := "Item added"
+	if err != nil {
+		result = err.Error()
+	}
+
+	out.Out(result)
 }
 
 type GetUsecase struct{}
@@ -34,7 +40,7 @@ func (u FindUsecase) Done(in Input, out Output, tracker *Tracker) {
 	if item != nil {
 		out.Out(item.toString())
 	} else {
-		out.Out("Item not found")
+		out.Out(ErrNotFound.Error())
 	}
 }
 
@@ -45,11 +51,13 @@ func (u UpdateUsecase) Done(in Input, out Output, tracker *Tracker) {
 	id := in.Get()
 	out.Out("Enter item new name")
 	name := in.Get()
-	if tracker.UpdateItem(id, name) {
-		out.Out("Item updated")
-	} else {
-		out.Out("Item not found")
+	err := tracker.UpdateItem(Item{ID: id, Name: name})
+	result := "Item updated"
+	if err != nil {
+		result = err.Error()
 	}
+
+	out.Out(result)
 }
 
 type DeleteUsecase struct{}
@@ -57,10 +65,11 @@ type DeleteUsecase struct{}
 func (u DeleteUsecase) Done(in Input, out Output, tracker *Tracker) {
 	out.Out("Enter item ID")
 	id := in.Get()
-	isDeleted := tracker.DeleteItem(id)
-	if isDeleted {
-		out.Out("Item is deleted")
-	} else {
-		out.Out("Item not found")
+	err := tracker.DeleteItem(id)
+	result := "Item is deleted"
+	if err != nil {
+		result = err.Error()
 	}
+
+	out.Out(result)
 }

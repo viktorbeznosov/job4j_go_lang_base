@@ -22,14 +22,28 @@ func NewTracker() *Tracker {
 	return &Tracker{}
 }
 
-func (t *Tracker) AddItem(item Item) {
+func (t *Tracker) AddItem(item Item) error {
+	_, ok := t.indexOf(item.ID)
+	if ok {
+		return ErrAlreadyExists
+	}
 	t.Items = append(t.Items, item)
+	return nil
 }
 
 func (t *Tracker) GetItems() []Item {
 	res := make([]Item, len(t.Items))
 	copy(res, t.Items)
 	return res
+}
+
+func (t *Tracker) indexOf(id string) (int, bool) {
+	for i, item := range t.Items {
+		if item.ID == id {
+			return i, true
+		}
+	}
+	return -1, false
 }
 
 func (t *Tracker) FindItem(term string) *Item {
@@ -42,25 +56,20 @@ func (t *Tracker) FindItem(term string) *Item {
 	return nil
 }
 
-func (t *Tracker) UpdateItem(id string, name string) bool {
-	result := false
-	for index, item := range t.Items {
-		if item.ID == id {
-			t.Items[index].Name = name
-			result = true
-		}
+func (t *Tracker) UpdateItem(item Item) error {
+	index, ok := t.indexOf(item.ID)
+	if !ok {
+		return ErrNotFound
 	}
-
-	return result
+	t.Items[index] = item
+	return nil
 }
 
-func (t *Tracker) DeleteItem(id string) bool {
-	result := false
-	for index, item := range t.Items {
-		if item.ID == id {
-			t.Items = append(t.Items[:index], t.Items[index+1:]...)
-			result = true
-		}
+func (t *Tracker) DeleteItem(id string) error {
+	index, ok := t.indexOf(id)
+	if !ok {
+		return ErrNotFound
 	}
-	return result
+	t.Items = append(t.Items[:index], t.Items[index+1:]...)
+	return nil
 }
