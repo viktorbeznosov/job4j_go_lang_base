@@ -9,8 +9,10 @@ import (
 
 type Store interface {
 	Create(ctx context.Context, item Item) error
-	List(ctx context.Context) ([]Item, error)
+	Update(ctx context.Context, item Item) error
+	List(ctx context.Context, term *string) ([]Item, error)
 	Get(ctx context.Context, id string) (Item, error)
+	Delete(ctx context.Context, id string)
 }
 
 type Usecase interface {
@@ -46,7 +48,7 @@ func (u GetUsecase) Done(
 	out Output,
 	store Store,
 ) error {
-	items, err := store.List(ctx)
+	items, err := store.List(ctx, nil)
 	if err != nil {
 		return fmt.Errorf("failed to get items: %w", err)
 	}

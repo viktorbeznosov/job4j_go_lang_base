@@ -29,8 +29,39 @@ func (r *RepoPg) Create(ctx context.Context, it tracker.Item) error {
 	return nil
 }
 
-func (r *RepoPg) List(ctx context.Context) ([]tracker.Item, error) {
-	rows, err := r.pool.Query(ctx, `select id, name from items`)
+func (r *RepoPg) Update(ctx context.Context, it tracker.Item) error {
+	_, err := r.pool.Exec(
+		ctx,
+		`UPDATE items SET name = $1 WHERE id = $2`,
+		it.Name,
+		it.ID,
+	)
+	if err != nil {
+		return fmt.Errorf("r.pool.Exec: %w", err)
+	}
+	return nil
+}
+
+func (r *RepoPg) Delete(ctx context.Context, id string) error {
+	_, err := r.pool.Exec(
+		ctx,
+		`DELETE FROM items WHERE id = $1`,
+		id,
+	)
+	if err != nil {
+		return fmt.Errorf("r.pool.Exec: %w", err)
+	}
+	return nil
+}
+
+func (r *RepoPg) List(ctx context.Context, term *string) ([]tracker.Item, error) {
+	var args []interface{}
+	sql := `select id, name from items`
+	if term != nil {
+		sql = `SELECT id, name FROM items WHERE name ILIKE $1`
+		args = append(args, "%"+*term+"%")
+	}
+	rows, err := r.pool.Query(ctx, sql, args...)
 	if err != nil {
 		return nil, err
 	}
