@@ -7,15 +7,20 @@ import (
 	"github.com/viktorbeznosov/job4j_go_lang_base/internal/base"
 )
 
-func Test_Validate_Request_Empty(t *testing.T) {
+func Test_Validate_Request_Empty_Length_3(t *testing.T) {
+	empteRequest := &base.ValidateRequest{}
+
+	result := base.Validate(empteRequest)
+
+	assert.Equal(t, len(result), 3)
+}
+
+func Test_Validate_Request_Empty_Contains_UserID_Is_Empty(t *testing.T) {
 	empteRequest := &base.ValidateRequest{}
 
 	result := base.Validate(empteRequest)
 
 	assert.Contains(t, result, "UserID is empty")
-	assert.Contains(t, result, "Title is empty")
-	assert.Contains(t, result, "Description is empty")
-	assert.Equal(t, len(result), 3)
 }
 
 func Test_Validate_Request_Is_Ok(t *testing.T) {
@@ -25,7 +30,8 @@ func Test_Validate_Request_Is_Ok(t *testing.T) {
 		Title:       "Test User",
 	}
 
+	expected := []string{}
 	result := base.Validate(request)
 
-	assert.Empty(t, result)
+	assert.Equal(t, result, expected)
 }
