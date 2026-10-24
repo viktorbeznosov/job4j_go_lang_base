@@ -8,6 +8,8 @@ import (
 )
 
 func Test_Create_Lru_Cache(t *testing.T) {
+	t.Parallel()
+
 	lruCache := base.NewLruCache(3)
 
 	lruCache.Put("1", "Value1")
@@ -18,6 +20,8 @@ func Test_Create_Lru_Cache(t *testing.T) {
 }
 
 func Test_Overflow_Сontrol(t *testing.T) {
+	t.Parallel()
+
 	lruCache := base.NewLruCache(3)
 
 	lruCache.Put("1", "Value1")
@@ -31,6 +35,8 @@ func Test_Overflow_Сontrol(t *testing.T) {
 }
 
 func Test_Get_Elements(t *testing.T) {
+	t.Parallel()
+
 	lruCache := base.NewLruCache(3)
 
 	lruCache.Put("1", "Value1")

@@ -8,6 +8,8 @@ import (
 )
 
 func Test_Validate_Request_Empty_Length_3(t *testing.T) {
+	t.Parallel()
+
 	empteRequest := &base.ValidateRequest{}
 
 	result := base.Validate(empteRequest)
@@ -16,6 +18,8 @@ func Test_Validate_Request_Empty_Length_3(t *testing.T) {
 }
 
 func Test_Validate_Request_Empty_Contains_UserID_Is_Empty(t *testing.T) {
+	t.Parallel()
+
 	empteRequest := &base.ValidateRequest{}
 
 	result := base.Validate(empteRequest)
@@ -24,6 +28,8 @@ func Test_Validate_Request_Empty_Contains_UserID_Is_Empty(t *testing.T) {
 }
 
 func Test_Validate_Request_Is_Ok(t *testing.T) {
+	t.Parallel()
+
 	request := &base.ValidateRequest{
 		UserID:      "1",
 		Description: "test",

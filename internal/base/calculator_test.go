@@ -8,6 +8,8 @@ import (
 )
 
 func Test_Add(t *testing.T) {
+	t.Parallel()
+
 	rsl := base.Add(1, 2)
 	expected := 3
 
@@ -15,6 +17,8 @@ func Test_Add(t *testing.T) {
 }
 
 func Test_Max(t *testing.T) {
+	t.Parallel()
+
 	tests := []struct {
 		name     string
 		a, b     int
@@ -27,6 +31,8 @@ func Test_Max(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
+
 			result := base.Max(tt.a, tt.b)
 			assert.Equal(t, tt.expected, result)
 		})
@@ -34,6 +40,8 @@ func Test_Max(t *testing.T) {
 }
 
 func Test_Count(t *testing.T) {
+	t.Parallel()
+
 	tests := []struct {
 		name     string
 		n        int
@@ -46,6 +54,8 @@ func Test_Count(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
+
 			result := base.Count(tt.n)
 			assert.Equal(t, tt.expected, result)
 		})
